@@ -82,6 +82,7 @@ app.post('/post/:parentId',function(req, res){
 	var obj = {};
 	obj.body = req.body.postbody;
 	obj.item = req.body.item;
+	obj.imgurl = req.body.imgurl; 
 	Post.findById(req.params.parentId, function (err, doc){
 		if (err){
 			console.log(err);

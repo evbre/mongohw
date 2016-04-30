@@ -9,6 +9,7 @@ var postSchema = mongoose.Schema({
     body: String,
     items: [{
     	body: String,
+        imgurl: String,
     	item: String,
     	datetime: {
     		type:Date,

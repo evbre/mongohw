@@ -3,12 +3,14 @@
 
 {{#each items}}
 	<p><em>{{item}}</em> || {{datetime}}</p>
+	<p><img src="{{imgurl}}" /></p>
 	<p>{{body}}</p>
 	<br/>
 {{/each}}
 
 <form method="post" action="/post/{{_id}}">
 	<p>Item: <input type="text" name="item" /></p>
+	<p>Image URL: <input type="text" name="imgurl" /></p>
 	<textarea name="postbody"></textarea><br/>
 	<input type="submit" />
 </form>
