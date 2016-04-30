@@ -1,16 +1,15 @@
 var mongoose = require('mongoose');
 
-var msgSchema = mongoose.Schema({
-    username: String,
+var postSchema = mongoose.Schema({
     datetime: {
     	type:Date,
     	default:Date.now
     },
     title: String,
     body: String,
-    replies: [{
+    items: [{
     	body: String,
-    	username: String,
+    	item: String,
     	datetime: {
     		type:Date,
     		default:Date.now
@@ -19,5 +18,5 @@ var msgSchema = mongoose.Schema({
     
 });
 
-var Message = mongoose.model('Message', msgSchema);
-module.exports = Message;
+var Post = mongoose.model('Post', postSchema);
+module.exports = Post;

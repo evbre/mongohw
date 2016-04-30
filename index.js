@@ -22,7 +22,7 @@ var mongoose = require('mongoose');
 mongoose.connect(credentials.mongo);
 
 // model
-var Message = require('./models/message.js');
+var Post = require('./models/post.js');
 
 // ------ routes -------- //
 
@@ -38,8 +38,8 @@ var Message = require('./models/message.js');
 });*/
 // show all the top-level (parent) messages
 app.get('/',function(req,res){
-	Message.find({}).sort({datetime:-1}).exec(function(err,msgs){
-		var context = {messages:msgs};
+	Post.find({}).sort({datetime:-1}).exec(function(err,posts){
+		var context = {posts:posts};
 		res.render('index',context);
 	});
 	//Room.find({}).sort({date: -1}).exec(function(err, docs) { ... });
@@ -47,8 +47,8 @@ app.get('/',function(req,res){
 });
 
 app.get('/all',function(req,res){
-	Message.find(function(err,msgs){
-		res.json(msgs);
+	Post.find(function(err,posts){
+		res.json(posts);
 	});
 })
 
@@ -57,20 +57,19 @@ app.get('/new',function(req,res){
 });
 
 // show a thread
-app.get('/thread/:id',function(req, res){
-	Message.findById(req.params.id, function (err, doc){
+app.get('/list/:id',function(req, res){
+	Post.findById(req.params.id, function (err, doc){
 		//var context = {messages: doc};
-		res.render('thread',doc);
+		res.render('list',doc);
 	});
 });
 
 // 
 // add new thread
 app.post('/post',function(req, res){
-	new Message({
-		username: req.body.username,
+	new Post({
 		title: req.body.title,
-		body: req.body.messagebody
+		body: req.body.postbody
 	}).save(function(err){
 		if (err){ console.log(err); }
 		//res.send('saved');
@@ -81,17 +80,17 @@ app.post('/post',function(req, res){
 // add reply to existing thread
 app.post('/post/:parentId',function(req, res){
 	var obj = {};
-	obj.body = req.body.messagebody;
-	obj.username = req.body.username;
-	Message.findById(req.params.parentId, function (err, doc){
+	obj.body = req.body.postbody;
+	obj.item = req.body.item;
+	Post.findById(req.params.parentId, function (err, doc){
 		if (err){
 			console.log(err);
 			res.render('500');
 		}
-	  	doc.replies.push(obj);
+	  	doc.items.push(obj);
 	  	doc.save();
 	  	//res.send("Saved reply");
-	  	res.redirect('/thread/'+req.params.parentId);
+	  	res.redirect('/list/'+req.params.parentId);
 	});
 });
 

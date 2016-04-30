@@ -1,7 +1,6 @@
-<p><a href="/new">New Thread</a></p>
+<p><a href="/new">new log or list</a></p>
 
-{{#each messages}}
-	<h2><a href="/thread/{{_id}}">{{title}}</a></h2>
-	<p><em>{{username}}</em> at {{datetime}}</p>
+{{#each posts}}
+	<h2><a href="/list/{{_id}}">{{title}}</a></h2>
 	<p>{{body}}</p>
 {{/each}}
